@@ -24,8 +24,8 @@
   let instrumentVolume = 80; // 80%
   let isMusicEnabled = true; // controle do botão de mudo
   $: if (bgmAudio) bgmAudio.volume = bgmVolume / 100;
-  const BGM_MENU = '/audio/Buy Something!.mp3';   // música do menu
-  const BGM_GAME = '/audio/two_left_socks.ogg';     // música do jogo
+  const BGM_MENU = './public/audio/Buy Something!.mp3';   // música do menu
+  const BGM_GAME = './public/audio/two_left_socks.ogg';     // música do jogo
   let currentBgm = BGM_MENU;  // inicialmente aponta para o menu
 
   // Estado do jogo
