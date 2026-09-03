@@ -81,14 +81,19 @@
   // Desenha a pauta e a nota no container
   function drawNote() {
     if (!staffContainer) return;
+
+    // Obtém a largura real do container (staff-card)
+    const containerWidth = staffContainer.clientWidth;
+    const rendererWidth = Math.min(500, containerWidth - 20); // limita a 500px
+    const staveWidth = rendererWidth - 20;
+
     staffContainer.innerHTML = ''; // limpa a pauta anterior
 
     const renderer = new Renderer(staffContainer, Renderer.Backends.SVG);
-    renderer.resize(500, 220);
+    renderer.resize(rendererWidth, 220);
     const context = renderer.getContext();
 
-    // FIXED: Separate the draw() call so 'stave' is correctly defined
-    const stave = new Stave(10, 50, 480).addClef('treble');
+    const stave = new Stave(10, 50, staveWidth).addClef('treble');
     stave.setContext(context).draw();
 
     const note = new StaveNote({
@@ -102,12 +107,12 @@
       strokeStyle: '#D84315',
     });
 
-    const voice = new Voice({ numBeats: 1, beat_value: 4 });
+    const voice = new Voice({ num_beats: 1, beat_value: 4 });
     voice.setMode(Voice.Mode.SOFT);
     voice.setStave(stave);
     voice.addTickables([note]);
 
-    new Formatter().joinVoices([voice]).format([voice], 350);
+    new Formatter().joinVoices([voice]).format([voice], staveWidth - 50);
     voice.draw(context, stave);
   }
 
@@ -497,13 +502,13 @@
       {/if}
 
       <div class="answers">
-        <button class="answer red"    on:click={() => handleAnswer('Dó')}>Dó <span class="key-hint">A</span></button>
-        <button class="answer blue"   on:click={() => handleAnswer('Ré')}>Ré <span class="key-hint">S</span></button>
-        <button class="answer yellow" on:click={() => handleAnswer('Mi')}>Mi <span class="key-hint">D</span></button>
+        <button class="answer red"    on:click={() => handleAnswer('Dó')}>Dó <span class="key-hint">C</span></button>
+        <button class="answer blue"   on:click={() => handleAnswer('Ré')}>Ré <span class="key-hint">D</span></button>
+        <button class="answer yellow" on:click={() => handleAnswer('Mi')}>Mi <span class="key-hint">E</span></button>
         <button class="answer green"  on:click={() => handleAnswer('Fá')}>Fá <span class="key-hint">F</span></button>
-        <button class="answer orange" on:click={() => handleAnswer('Sol')}>Sol <span class="key-hint">J</span></button>
-        <button class="answer purple" on:click={() => handleAnswer('Lá')}>Lá <span class="key-hint">K</span></button>
-        <button class="answer pink"   on:click={() => handleAnswer('Si')}>Si <span class="key-hint">L</span></button>
+        <button class="answer orange" on:click={() => handleAnswer('Sol')}>Sol <span class="key-hint">G</span></button>
+        <button class="answer purple" on:click={() => handleAnswer('Lá')}>Lá <span class="key-hint">A</span></button>
+        <button class="answer pink"   on:click={() => handleAnswer('Si')}>Si <span class="key-hint">B</span></button>
       </div>
 
       <button class="config-gear" on:click={goToConfig}>⚙️</button>
